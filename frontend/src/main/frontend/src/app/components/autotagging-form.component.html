@@ -1,0 +1,42 @@
+{{diagnostic}}
+<div class="container">
+  <h1>Auto-Tagging Tool</h1>
+  <hr/>
+
+  <form #autotaggingForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="searchKeywords">Search keywords</label>
+      <input type="text" class="form-control" id="searchKeywords" placeholder="example,1234567..." required [(ngModel)]="searchKeywordsString" name="searchKeywordsString" (ngModelChange)="parseSearchKeywords()">
+      <small class="form-text text-muted">Comma-separated list of keywords and/or keyword IDs for search</small>
+    </div>
+
+    <div class="form-group">
+      <label for="targetKeywords">Target keywords</label>
+      <input type="text" class="form-control" id="targetKeywords" placeholder="example,1234567..." required [(ngModel)]="targetKeywordsString" name="targetKeywordsString" (ngModelChange)="parseTargetKeywords()">
+      <small class="form-text text-muted">Comma-separated list of keywords and/or keyword IDs to calculate match rate</small>
+    </div>
+
+    <div class="form-group">
+      <label for="api">Auto-tagging API</label>
+      <select class="form-control" id="api" required [(ngModel)]="model.api" name="api">
+        <option *ngFor="let api of apis" [value]="api">{{api}}</option>
+      </select>
+      <small class="form-text text-muted">API that will be used for comparison</small>
+    </div>
+
+    <div class="form-group">
+      <label for="sampleSize">Sample size</label>
+      <input type="number" min="1" max="1000" class="form-control" id="sampleSize" placeholder="1..1000" required [(ngModel)]="model.sampleSize" name="model.sampleSize">
+      <small class="form-text text-muted">Number of assets to generate the report</small>
+    </div>
+
+    <div class="form-group">
+      <label for="recipients">Recipients</label>
+      <input type="text" class="form-control" id="recipients" placeholder="name@example.com,name@example.com..." [(ngModel)]="recipientsString" name="recipientsString" (ngModelChange)="parseRecipients()">
+      <small class="form-text text-muted">Comma-separated list of emails to send the comparison report</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!autotaggingForm.form.valid">Submit</button>
+
+  </form>
+</div>
